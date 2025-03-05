@@ -1,15 +1,23 @@
 import { useState, useEffect } from 'react';
 
 interface User {
-  id: string;
+  id: number;
   email: string;
-  name: string;
+  name: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+}
+
+interface SignUpData {
+  email: string;
+  password: string;
+  name?: string;
 }
 
 export function useAuth() {
@@ -20,41 +28,48 @@ export function useAuth() {
   });
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // In a real app, this would be an API call to check the session
-        const response = await fetch('/api/auth/session');
-        const data = await response.json();
+    let isMounted = true;
 
-        if (data.user) {
-          setAuthState({
-            user: data.user,
-            loading: false,
-            error: null,
-          });
-        } else {
-          setAuthState({
-            user: null,
-            loading: false,
-            error: null,
-          });
+    const checkAuth = async () => {
+      if (!isMounted) return;
+
+      try {
+        const response = await fetch('/api/auth/session');
+        if (!isMounted) return;
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch session');
         }
+
+        const data = await response.json();
+        if (!isMounted) return;
+
+        setAuthState({
+          user: data.user,
+          loading: false,
+          error: null,
+        });
       } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Failed to authenticate';
+        if (!isMounted) return;
+        
+        console.error('Auth check error:', error);
         setAuthState({
           user: null,
           loading: false,
-          error: errorMessage,
+          error: null, // Don't show error to user on initial load
         });
       }
     };
 
     checkAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
     try {
-      // In a real app, this would be an API call to sign in
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -80,7 +95,6 @@ export function useAuth() {
 
   const signOut = async () => {
     try {
-      // In a real app, this would be an API call to sign out
       await fetch('/api/auth/signout', { method: 'POST' });
       setAuthState({
         user: null,
@@ -96,11 +110,42 @@ export function useAuth() {
     }
   };
 
+  const signUp = async (data: SignUpData) => {
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.error || 'Failed to sign up');
+      }
+
+      if (responseData.user) {
+        setAuthState({
+          user: responseData.user,
+          loading: false,
+          error: null,
+        });
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to sign up';
+      setAuthState(prev => ({
+        ...prev,
+        error: errorMessage,
+      }));
+    }
+  };
+
   return {
     user: authState.user,
     loading: authState.loading,
     error: authState.error,
     signIn,
+    signUp,
     signOut,
   };
 }
