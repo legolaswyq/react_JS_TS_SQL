@@ -25,9 +25,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-blue-50">
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-50">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
@@ -54,12 +54,12 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-100">
         <div className="container px-4 md:px-6 mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {features.map((feature) => (
-              <Card key={feature.title} className="p-6">
+              <Card key={feature.title} className="p-6 bg-blue-50">
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className="relative w-12 h-12">
                     <Image
@@ -79,14 +79,15 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-50">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-200">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center space-y-4 text-center">
-            <h2 className="text-3xl font-bold">Ready to Get Started?</h2>
-            <p className="text-gray-500 md:text-xl max-w-[600px]">
+            <h2 className="text-3xl font-bold text-blue-900">Ready to Get Started?</h2>
+            <p className="text-blue-800 md:text-xl max-w-[600px]">
               Join us and start building amazing applications with our modern tech stack.
             </p>
             <Button
+              className="bg-blue-600 hover:bg-blue-700 text-white"
               onClick={() => window.location.href = '/docs'}
             >
               Start Building

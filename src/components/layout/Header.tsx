@@ -21,7 +21,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2">
-              <img src="/hippo.png" alt="HippoStation" className="h-8 w-8" />
+              <img src="/hippo_daisy.png" alt="HippoStation" className="h-20 w-20" />
               <span className="text-xl font-bold text-gray-900">HippoStation</span>
             </Link>
           </div>
