@@ -47,10 +47,10 @@ const Header = () => {
         <nav>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Home</Link>
-              <Link href="#" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Agents</Link>
-              <Link href="#" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Workflows</Link>
-              <Link href="#" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Chatboxes</Link>
+              <Link href="/" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Home</Link>
+              <Link href="/agents" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Agents</Link>
+              <Link href="/workflows" className="text-gray-600 text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Workflows</Link>
+              <Link href="/chatbot" className="text-gray-600 p-3 bg-white rounded-lg transition-shadow duration-100 hover:bg-gray-300">Chatbot</Link>
             </div>
           </div>
         </nav>
